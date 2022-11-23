@@ -2,6 +2,7 @@ import Globals from "./globals.js";
 import * as Poses from "./PosesManager.js";
 let rn = null;
 let webcam = null;
+let MyVideo = null;
 
 
 runOnStartup(async runtime =>
@@ -19,13 +20,14 @@ export async function StartCamera()
                             height: { ideal: 360 } 
                         }
                     };
-		// Request camera input from the user. This might show a permission prompt.
-		const mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
 		
-		// If camera input approved, show it in the video element.
-		const videoElem = Globals.videoElem;
-		videoElem.srcObject = mediaStream;
-		videoElem.play();
+		MyVideo = C3UserMedia_GetVideoElement(0);
+// 		// Request camera input from the user. This might show a permission prompt.
+// 		const mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+// 		// If camera input approved, show it in the video element.
+// 		const videoElem = Globals.videoElem;
+// 		videoElem.srcObject = mediaStream;
+// 		videoElem.play();
 		// Start looking at the pixels in the video. This repeatedly
 		// calling itself every frame using requestAnimationFrame.
 		OnFrame();
@@ -33,7 +35,6 @@ export async function StartCamera()
 	catch (err)
 	{
 		// Handle an error - most likely the user declining the permission prompt.
-		console.log("ERROR");
 		console.error(err);
 		Globals.statusTextInstance.text = "Oops! Something went wrong";
 	}
@@ -52,10 +53,9 @@ function OnFrame()
 function GetCameraPixels()
 {
 	// Get the size of the video
-	const videoElem = Globals.videoElem;
+	const videoElem = MyVideo;
 	const videoWidth = videoElem.videoWidth;
 	const videoHeight = videoElem.videoHeight;
-	
 	// If the video size is not greater than 0, it's probably not fully loaded yet.
 	// Ignore this call - it will keep trying every frame until it loads.
 	if (videoWidth <= 0 || videoHeight <= 0)
