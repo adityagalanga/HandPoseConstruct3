@@ -370,10 +370,10 @@
 				{
 					"id": "create-object",
 					"objectClass": "System",
-					"sid": 118643226519933,
+					"sid": 278069474622093,
 					"parameters": {
 						"object-to-create": "Meteor",
-						"layer": "0",
+						"layer": "1",
 						"x": "1920 + 200",
 						"y": "random(0, 1080)",
 						"create-hierarchy": false,
@@ -429,10 +429,10 @@
 						{
 							"id": "create-object",
 							"objectClass": "System",
-							"sid": 377585033982662,
+							"sid": 781795190785768,
 							"parameters": {
 								"object-to-create": "laserBlue",
-								"layer": "0",
+								"layer": "1",
 								"x": "Player.ImagePointX(1)",
 								"y": "Player.ImagePointY(1)",
 								"create-hierarchy": false,
