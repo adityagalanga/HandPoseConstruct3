@@ -1,0 +1,541 @@
+{
+	"name": "Event sheet 1",
+	"events": [
+		{
+			"eventType": "variable",
+			"name": "WidthMultiplier",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 800814648763621
+		},
+		{
+			"eventType": "variable",
+			"name": "HeightMultiplier",
+			"type": "number",
+			"initialValue": "0",
+			"comment": "",
+			"isStatic": false,
+			"isConstant": false,
+			"sid": 390577866566871
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-start-of-layout",
+					"objectClass": "System",
+					"sid": 169498808712553
+				}
+			],
+			"actions": [
+				{
+					"id": "set-eventvar-value",
+					"objectClass": "System",
+					"sid": 587399610358667,
+					"parameters": {
+						"variable": "WidthMultiplier",
+						"value": "1920/ 640"
+					}
+				},
+				{
+					"id": "set-eventvar-value",
+					"objectClass": "System",
+					"sid": 144788015715060,
+					"parameters": {
+						"variable": "HeightMultiplier",
+						"value": "1080/ 360"
+					}
+				},
+				{
+					"id": "request-camera",
+					"objectClass": "UserMedia",
+					"sid": 346073266813958,
+					"parameters": {
+						"source": "0",
+						"preferred-direction": "any",
+						"preferred-width": "640",
+						"preferred-height": "360",
+						"include-mic": false,
+						"mic-source": "0"
+					}
+				},
+				{
+					"type": "script",
+					"script": "Poses.init();"
+				},
+				{
+					"type": "script",
+					"script": "Camera.StartCamera();"
+				}
+			],
+			"sid": 353939272202209
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "every-x-seconds",
+					"objectClass": "System",
+					"sid": 924993750024725,
+					"parameters": {
+						"interval-seconds": "random(0.5,3)"
+					}
+				}
+			],
+			"actions": [
+				{
+					"callFunction": "Create Meteor",
+					"sid": 812413227316069
+				}
+			],
+			"sid": 625501725272960
+		},
+		{
+			"functionName": "DetectPoses",
+			"functionDescription": "",
+			"functionCategory": "",
+			"functionReturnType": "none",
+			"functionCopyPicked": false,
+			"functionIsAsync": false,
+			"functionParameters": [
+				{
+					"name": "json",
+					"type": "string",
+					"initialValue": "",
+					"comment": "",
+					"sid": 696509191401145
+				}
+			],
+			"eventType": "function-block",
+			"conditions": [],
+			"actions": [
+				{
+					"id": "parse",
+					"objectClass": "JSON",
+					"sid": 828747920266783,
+					"parameters": {
+						"data": "json"
+					}
+				}
+			],
+			"sid": 742714689142672,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "has-key",
+							"objectClass": "JSON",
+							"sid": 402538899665817,
+							"parameters": {
+								"path": "\"0.keypoints\""
+							}
+						}
+					],
+					"actions": [],
+					"sid": 990689122466904,
+					"children": [
+						{
+							"eventType": "variable",
+							"name": "Num1X",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"isStatic": false,
+							"isConstant": false,
+							"sid": 705903671361779
+						},
+						{
+							"eventType": "variable",
+							"name": "Num1Y",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"isStatic": false,
+							"isConstant": false,
+							"sid": 796319111754794
+						},
+						{
+							"eventType": "variable",
+							"name": "Num2X",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"isStatic": false,
+							"isConstant": false,
+							"sid": 619007878503266
+						},
+						{
+							"eventType": "variable",
+							"name": "Num2Y",
+							"type": "number",
+							"initialValue": "0",
+							"comment": "",
+							"isStatic": false,
+							"isConstant": false,
+							"sid": 187067230760317
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "for-each-ordered",
+									"objectClass": "System",
+									"sid": 311878540713993,
+									"parameters": {
+										"object": "Sprite2",
+										"expression": "Sprite2.UID",
+										"order": "ascending"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "set-instvar-value",
+									"objectClass": "Sprite2",
+									"sid": 103360480826038,
+									"parameters": {
+										"instance-variable": "Num",
+										"value": "loopindex"
+									}
+								}
+							],
+							"sid": 230014150815931,
+							"children": [
+								{
+									"eventType": "block",
+									"conditions": [],
+									"actions": [
+										{
+											"id": "set-position",
+											"objectClass": "Sprite2",
+											"sid": 205623157570801,
+											"parameters": {
+												"x": "JSON.Get(\"0.keypoints.\"&loopindex&\".x\")* WidthMultiplier",
+												"y": "JSON.Get(\"0.keypoints.\"&loopindex&\".y\")* HeightMultiplier"
+											}
+										}
+									],
+									"sid": 903430772602978,
+									"children": [
+										{
+											"eventType": "block",
+											"conditions": [
+												{
+													"id": "compare-two-values",
+													"objectClass": "System",
+													"sid": 245347387813374,
+													"parameters": {
+														"first-value": "Sprite2.Num",
+														"comparison": 0,
+														"second-value": "9"
+													}
+												}
+											],
+											"actions": [
+												{
+													"id": "set-position",
+													"objectClass": "Player",
+													"sid": 321584949253284,
+													"parameters": {
+														"x": "Sprite2.X",
+														"y": "Sprite2.Y"
+													}
+												}
+											],
+											"sid": 741395109530312
+										}
+									]
+								}
+							]
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "compare-instance-variable",
+									"objectClass": "Sprite2",
+									"sid": 774512214686196,
+									"parameters": {
+										"instance-variable": "Num",
+										"comparison": 0,
+										"value": "4"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "set-eventvar-value",
+									"objectClass": "System",
+									"sid": 221583338419102,
+									"parameters": {
+										"variable": "Num1X",
+										"value": "Sprite2.X"
+									}
+								},
+								{
+									"id": "set-eventvar-value",
+									"objectClass": "System",
+									"sid": 456484209682803,
+									"parameters": {
+										"variable": "Num1Y",
+										"value": "Sprite2.Y"
+									}
+								}
+							],
+							"sid": 950078320412066
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "compare-instance-variable",
+									"objectClass": "Sprite2",
+									"sid": 559347552342725,
+									"parameters": {
+										"instance-variable": "Num",
+										"comparison": 0,
+										"value": "20"
+									}
+								}
+							],
+							"actions": [
+								{
+									"id": "set-eventvar-value",
+									"objectClass": "System",
+									"sid": 113694906265357,
+									"parameters": {
+										"variable": "Num2X",
+										"value": "Sprite2.X"
+									}
+								},
+								{
+									"id": "set-eventvar-value",
+									"objectClass": "System",
+									"sid": 995226702378886,
+									"parameters": {
+										"variable": "Num2Y",
+										"value": "Sprite2.Y"
+									}
+								}
+							],
+							"sid": 889296970491393
+						},
+						{
+							"eventType": "block",
+							"conditions": [],
+							"actions": [
+								{
+									"callFunction": "ShootLaser",
+									"sid": 560279117180720
+								}
+							],
+							"sid": 780459928847198
+						},
+						{
+							"eventType": "block",
+							"conditions": [
+								{
+									"id": "compare-two-values",
+									"objectClass": "System",
+									"sid": 426979888353944,
+									"parameters": {
+										"first-value": "distance(Num1X,Num1Y,Num2X,Num2Y)",
+										"comparison": 3,
+										"second-value": "400"
+									}
+								}
+							],
+							"actions": [],
+							"sid": 147573430075617
+						}
+					]
+				}
+			]
+		},
+		{
+			"functionName": "Create Meteor",
+			"functionDescription": "",
+			"functionCategory": "",
+			"functionReturnType": "none",
+			"functionCopyPicked": false,
+			"functionIsAsync": false,
+			"functionParameters": [],
+			"eventType": "function-block",
+			"conditions": [],
+			"actions": [
+				{
+					"id": "create-object",
+					"objectClass": "System",
+					"sid": 118643226519933,
+					"parameters": {
+						"object-to-create": "Meteor",
+						"layer": "0",
+						"x": "1920 + 200",
+						"y": "random(0, 1080)",
+						"create-hierarchy": false,
+						"template-name": "\"\""
+					}
+				},
+				{
+					"id": "set-visible",
+					"objectClass": "Meteor",
+					"sid": 384540619514763,
+					"parameters": {
+						"visibility": "visible"
+					}
+				}
+			],
+			"sid": 910325705732651
+		},
+		{
+			"functionName": "ShootLaser",
+			"functionDescription": "",
+			"functionCategory": "",
+			"functionReturnType": "none",
+			"functionCopyPicked": false,
+			"functionIsAsync": false,
+			"functionParameters": [],
+			"eventType": "function-block",
+			"conditions": [],
+			"actions": [],
+			"sid": 533571615163828,
+			"children": [
+				{
+					"eventType": "block",
+					"conditions": [
+						{
+							"id": "is-boolean-instance-variable-set",
+							"objectClass": "Player",
+							"sid": 208553381547769,
+							"parameters": {
+								"instance-variable": "CanShoot"
+							}
+						}
+					],
+					"actions": [
+						{
+							"id": "set-boolean-instvar",
+							"objectClass": "Player",
+							"sid": 359057208527832,
+							"parameters": {
+								"instance-variable": "CanShoot",
+								"value": "false"
+							}
+						},
+						{
+							"id": "create-object",
+							"objectClass": "System",
+							"sid": 377585033982662,
+							"parameters": {
+								"object-to-create": "laserBlue",
+								"layer": "0",
+								"x": "Player.ImagePointX(1)",
+								"y": "Player.ImagePointY(1)",
+								"create-hierarchy": false,
+								"template-name": "\"\""
+							}
+						},
+						{
+							"id": "set-visible",
+							"objectClass": "laserBlue",
+							"sid": 325464934162521,
+							"parameters": {
+								"visibility": "visible"
+							}
+						},
+						{
+							"id": "start-timer",
+							"objectClass": "Player",
+							"sid": 612085882268040,
+							"behaviorType": "Timer",
+							"parameters": {
+								"duration": "0.5",
+								"type": "once",
+								"tag": "\"Shoot\""
+							}
+						}
+					],
+					"sid": 188121106460175
+				}
+			]
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-timer",
+					"objectClass": "Player",
+					"sid": 496799661658440,
+					"behaviorType": "Timer",
+					"parameters": {
+						"tag": "\"Shoot\""
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "set-boolean-instvar",
+					"objectClass": "Player",
+					"sid": 737567254087763,
+					"parameters": {
+						"instance-variable": "CanShoot",
+						"value": "true"
+					}
+				}
+			],
+			"sid": 556856674649878
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-collision-with-another-object",
+					"objectClass": "laserBlue",
+					"sid": 597389824573742,
+					"parameters": {
+						"object": "Meteor"
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "destroy",
+					"objectClass": "Meteor",
+					"sid": 173559354313688
+				},
+				{
+					"id": "destroy",
+					"objectClass": "laserBlue",
+					"sid": 735575399443464
+				}
+			],
+			"sid": 277079671178271
+		},
+		{
+			"eventType": "block",
+			"conditions": [
+				{
+					"id": "on-collision-with-another-object",
+					"objectClass": "OffLayer",
+					"sid": 449121107766661,
+					"parameters": {
+						"object": "Meteor"
+					}
+				}
+			],
+			"actions": [
+				{
+					"id": "destroy",
+					"objectClass": "Meteor",
+					"sid": 955682479358814
+				}
+			],
+			"sid": 699531040296775
+		}
+	],
+	"sid": 587675979152342
+}

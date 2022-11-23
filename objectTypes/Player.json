@@ -1,0 +1,78 @@
+{
+	"name": "Player",
+	"plugin-id": "Sprite",
+	"sid": 504848785584714,
+	"isGlobal": false,
+	"instanceVariables": [
+		{
+			"name": "CanShoot",
+			"type": "boolean",
+			"desc": "",
+			"show": true,
+			"sid": 875210941832687
+		}
+	],
+	"behaviorTypes": [
+		{
+			"behaviorId": "Timer",
+			"name": "Timer",
+			"sid": 980558576332882
+		}
+	],
+	"effectTypes": [],
+	"animations": {
+		"items": [
+			{
+				"frames": [
+					{
+						"width": 98,
+						"height": 75,
+						"originX": 0.5,
+						"originY": 0.5,
+						"originalSource": "",
+						"exportFormat": "lossless",
+						"exportQuality": 0.8,
+						"imageSpriteId": 3257247,
+						"collisionPoly": {
+							"points": [
+								0.2755102040816326,
+								0.36,
+								0.5,
+								0,
+								0.7142857142857143,
+								0.36,
+								0.7959183673469388,
+								0.5,
+								0.9081632653061225,
+								0.88,
+								0.5,
+								0.9866666666666667,
+								0.08163265306122448,
+								0.88,
+								0.1836734693877551,
+								0.5
+							]
+						},
+						"useCollisionPoly": true,
+						"imagePoints": [
+							{
+								"name": "Image Point 1",
+								"x": 0.5,
+								"y": 0
+							}
+						],
+						"duration": 1
+					}
+				],
+				"sid": 497880562746007,
+				"name": "Animation 1",
+				"isLooping": false,
+				"isPingPong": false,
+				"repeatCount": 1,
+				"repeatTo": 0,
+				"speed": 5
+			}
+		],
+		"subfolders": []
+	}
+}
